@@ -31,6 +31,7 @@ set-up downloads it and builds the catalog locally:
 git clone <this repository> scentvec
 cd scentvec
 python3 -m venv .venv
+./.venv/bin/pip install --upgrade pip           # editable installs need pip 21.3+
 ./.venv/bin/pip install -e .
 ./.venv/bin/python scripts/fetch_raw_data.py     # 36 MB from pinned sources, checksummed
 sh scripts/rebuild_data.sh                       # clean, link, build chemistry table
