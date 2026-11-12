@@ -1,0 +1,43 @@
+{
+  "scentvec_version": "1.0.0",
+  "source_run": "final",
+  "packaged_at": "2026-11-13T01:30:28+0700",
+  "selected_epoch": 13,
+  "validation_score": 0.7664751080082209,
+  "validation_metrics": {
+    "parfumo_to_doevent": {
+      "n_queries": 665,
+      "recall@1": 0.8601503759398497,
+      "recall@5": 0.9142857142857143,
+      "recall@10": 0.9308270676691729,
+      "mrr": 0.8872997090379496,
+      "median_rank": 1.0,
+      "gallery_size": 2619
+    },
+    "doevent_to_parfumo": {
+      "n_queries": 669,
+      "recall@1": 0.8086696562032885,
+      "recall@5": 0.8953662182361734,
+      "recall@10": 0.9177877428998505,
+      "mrr": 0.8512621548921017,
+      "median_rank": 1.0,
+      "gallery_size": 2718
+    },
+    "accords": {
+      "n_perfumes": 1905,
+      "map": 0.7808519499497698,
+      "precision@1": 0.8881889763779528,
+      "ndcg@5": 0.7264591741522578
+    },
+    "family": {
+      "n_perfumes": 2619,
+      "accuracy": 0.6345933562428407,
+      "macro_f1": 0.47439967909091735
+    },
+    "subfamily": {
+      "n_perfumes": 2619,
+      "accuracy": 0.4436807941962581,
+      "macro_f1": 0.21034840556196846
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "descriptor_dimensions": 184,
+  "table_keys": 6136,
+  "distinct_notes": 2810,
+  "notes_by_route": {
+    "descriptor": 234,
+    "none": 1080,
+    "token": 1387,
+    "ingredient": 68,
+    "molecule": 41
+  },
+  "share_of_note_occurrences_by_route": {
+    "descriptor": 0.8095,
+    "none": 0.0803,
+    "token": 0.0846,
+    "ingredient": 0.0113,
+    "molecule": 0.0142
+  }
+}

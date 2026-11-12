@@ -1,0 +1,197 @@
+{
+  "run": "final",
+  "split": "test",
+  "resamples": 10000,
+  "queries": {
+    "parfumo_to_doevent": 691,
+    "doevent_to_parfumo": 699,
+    "parfumo_to_doevent_full_gallery": 691,
+    "doevent_to_parfumo_full_gallery": 699
+  },
+  "tasks": {
+    "parfumo_to_doevent": {
+      "jaccard": {
+        "mrr_ours": 0.8718722324193293,
+        "mrr_baseline": 0.8447867625498016,
+        "difference": 0.02708546986952778,
+        "ci95_low": 0.013020209934854855,
+        "ci95_high": 0.04109037722192465,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 93,
+        "queries_worse": 42,
+        "queries_equal": 556
+      },
+      "tfidf_notes": {
+        "mrr_ours": 0.8718722324193293,
+        "mrr_baseline": 0.8066036270501269,
+        "difference": 0.06526860536920265,
+        "ci95_low": 0.04763050231004708,
+        "ci95_high": 0.08367039590691137,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 129,
+        "queries_worse": 43,
+        "queries_equal": 519
+      },
+      "tfidf_words": {
+        "mrr_ours": 0.8718722324193293,
+        "mrr_baseline": 0.8417347959226665,
+        "difference": 0.030137436496662725,
+        "ci95_low": 0.015383924839774346,
+        "ci95_high": 0.04560897395090045,
+        "share_of_resamples_above_zero": 0.9998,
+        "queries_better": 97,
+        "queries_worse": 42,
+        "queries_equal": 552
+      },
+      "lsa": {
+        "mrr_ours": 0.8718722324193293,
+        "mrr_baseline": 0.849255576066129,
+        "difference": 0.022616656353200523,
+        "ci95_low": 0.008891647785612782,
+        "ci95_high": 0.03642990016960169,
+        "share_of_resamples_above_zero": 0.9996,
+        "queries_better": 89,
+        "queries_worse": 42,
+        "queries_equal": 560
+      }
+    },
+    "doevent_to_parfumo": {
+      "jaccard": {
+        "mrr_ours": 0.8556111546905395,
+        "mrr_baseline": 0.7949020872831646,
+        "difference": 0.06070906740737484,
+        "ci95_low": 0.042467272759589725,
+        "ci95_high": 0.0790480592444003,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 133,
+        "queries_worse": 35,
+        "queries_equal": 531
+      },
+      "tfidf_notes": {
+        "mrr_ours": 0.8556111546905395,
+        "mrr_baseline": 0.6459482489141893,
+        "difference": 0.20966290577635005,
+        "ci95_low": 0.1817067142061451,
+        "ci95_high": 0.23765402736757005,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 259,
+        "queries_worse": 36,
+        "queries_equal": 404
+      },
+      "tfidf_words": {
+        "mrr_ours": 0.8556111546905395,
+        "mrr_baseline": 0.6900594775639338,
+        "difference": 0.16555167712660554,
+        "ci95_low": 0.1408493358960239,
+        "ci95_high": 0.1912214429626853,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 225,
+        "queries_worse": 36,
+        "queries_equal": 438
+      },
+      "lsa": {
+        "mrr_ours": 0.8556111546905395,
+        "mrr_baseline": 0.825550695313309,
+        "difference": 0.03006045937723039,
+        "ci95_low": 0.014651687524360647,
+        "ci95_high": 0.04615356513049031,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 92,
+        "queries_worse": 46,
+        "queries_equal": 561
+      }
+    },
+    "parfumo_to_doevent_full_gallery": {
+      "jaccard": {
+        "mrr_ours": 0.7785540141765438,
+        "mrr_baseline": 0.7390726419626106,
+        "difference": 0.03948137221393334,
+        "ci95_low": 0.02301462683239555,
+        "ci95_high": 0.05640018114544164,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 135,
+        "queries_worse": 62,
+        "queries_equal": 494
+      },
+      "tfidf_notes": {
+        "mrr_ours": 0.7785540141765438,
+        "mrr_baseline": 0.6805566395530402,
+        "difference": 0.09799737462350369,
+        "ci95_low": 0.07682628920590451,
+        "ci95_high": 0.11964458323704297,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 190,
+        "queries_worse": 60,
+        "queries_equal": 441
+      },
+      "tfidf_words": {
+        "mrr_ours": 0.7785540141765438,
+        "mrr_baseline": 0.7271427327444859,
+        "difference": 0.05141128143205802,
+        "ci95_low": 0.03358758818493738,
+        "ci95_high": 0.07000108199272542,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 148,
+        "queries_worse": 64,
+        "queries_equal": 479
+      },
+      "lsa": {
+        "mrr_ours": 0.7785540141765438,
+        "mrr_baseline": 0.7392927004378667,
+        "difference": 0.0392613137386774,
+        "ci95_low": 0.023653865156917482,
+        "ci95_high": 0.05517552047907568,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 137,
+        "queries_worse": 63,
+        "queries_equal": 491
+      }
+    },
+    "doevent_to_parfumo_full_gallery": {
+      "jaccard": {
+        "mrr_ours": 0.7575818520144297,
+        "mrr_baseline": 0.6677794512426589,
+        "difference": 0.0898024007717708,
+        "ci95_low": 0.06866241815529683,
+        "ci95_high": 0.11160770399585629,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 202,
+        "queries_worse": 61,
+        "queries_equal": 436
+      },
+      "tfidf_notes": {
+        "mrr_ours": 0.7575818520144297,
+        "mrr_baseline": 0.49498657021140025,
+        "difference": 0.26259528180302943,
+        "ci95_low": 0.2325347534342265,
+        "ci95_high": 0.29295945554666164,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 331,
+        "queries_worse": 50,
+        "queries_equal": 318
+      },
+      "tfidf_words": {
+        "mrr_ours": 0.7575818520144297,
+        "mrr_baseline": 0.5367172599789403,
+        "difference": 0.22086459203548944,
+        "ci95_low": 0.19300353213094096,
+        "ci95_high": 0.24890747964608867,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 306,
+        "queries_worse": 50,
+        "queries_equal": 343
+      },
+      "lsa": {
+        "mrr_ours": 0.7575818520144297,
+        "mrr_baseline": 0.7160487721161131,
+        "difference": 0.041533079898316595,
+        "ci95_low": 0.024382408029682345,
+        "ci95_high": 0.05918218196679912,
+        "share_of_resamples_above_zero": 1.0,
+        "queries_better": 135,
+        "queries_worse": 88,
+        "queries_equal": 476
+      }
+    }
+  }
+}

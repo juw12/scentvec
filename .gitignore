@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.egg-info/
+.DS_Store
+
+# Third-party data: fetched by scripts/fetch_raw_data.py, not redistributed here
+data/raw/
+# Derived from the raw data: rebuilt by scripts/rebuild_data.sh and `scentvec build-index`
+data/processed/
+artifacts/index/
+
+# Training runs, logs, scratch
+artifacts/runs/
+artifacts/logs/
+artifacts/tmp/

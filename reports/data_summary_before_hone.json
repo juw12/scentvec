@@ -1,0 +1,24 @@
+{
+  "records_total": 85634,
+  "records_with_notes": 57481,
+  "records_with_notes_by_source": {
+    "parfumo": 31162,
+    "doevent": 26319
+  },
+  "records_with_notes_by_split": {
+    "train": 46066,
+    "val": 5791,
+    "test": 5624
+  },
+  "parfumo_with_notes_and_accords": 21272,
+  "distinct_canonical_notes": 2810,
+  "notes_seen_5_plus_times": 1381,
+  "cross_source_pairs": 9393,
+  "cross_source_linked_doevent_records": 8154,
+  "cross_source_unique_pairs": 7099,
+  "cross_source_unique_pairs_by_split": {
+    "train": 5702,
+    "test": 709,
+    "val": 688
+  }
+}

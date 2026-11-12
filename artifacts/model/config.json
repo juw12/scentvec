@@ -1,0 +1,37 @@
+{
+  "model": {
+    "n_note_ids": 1055,
+    "n_token_ids": 994,
+    "chem_dim": 184,
+    "n_accords": 21,
+    "n_families": 7,
+    "n_subfamilies": 15,
+    "hidden_dim": 128,
+    "embed_dim": 128,
+    "n_layers": 1,
+    "n_heads": 4,
+    "dropout": 0.1,
+    "note_unk_dropout": 0.1,
+    "use_note_ids": true,
+    "use_tokens": true,
+    "use_chem": true,
+    "use_positions": true
+  },
+  "train": {
+    "run_name": "final",
+    "epochs": 15,
+    "batch_size": 256,
+    "learning_rate": 0.002,
+    "weight_decay": 0.01,
+    "warmup_steps": 200,
+    "temperature": 0.07,
+    "accord_weight": 1.0,
+    "family_weight": 0.5,
+    "contrastive_weight": 1.0,
+    "max_note_dropout": 0.4,
+    "position_dropout": 0.3,
+    "use_cross_source_pairs": true,
+    "seed": 7,
+    "threads": 4
+  }
+}

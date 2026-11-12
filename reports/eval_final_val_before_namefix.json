@@ -1,0 +1,230 @@
+{
+  "run": "final",
+  "split": "val",
+  "methods": {
+    "scentvec": {
+      "parfumo_to_doevent": {
+        "n_queries": 659,
+        "recall@1": 0.8649468892261002,
+        "recall@5": 0.9150227617602428,
+        "recall@10": 0.9332321699544764,
+        "mrr": 0.8897938277308394,
+        "median_rank": 1.0,
+        "gallery_size": 2619
+      },
+      "doevent_to_parfumo": {
+        "n_queries": 663,
+        "recall@1": 0.8024132730015083,
+        "recall@5": 0.9049773755656109,
+        "recall@10": 0.9245852187028658,
+        "mrr": 0.8493310688117887,
+        "median_rank": 1.0,
+        "gallery_size": 2732
+      },
+      "parfumo_to_doevent_full_gallery": {
+        "n_queries": 659,
+        "recall@1": 0.7708649468892261,
+        "recall@5": 0.866464339908953,
+        "recall@10": 0.8831562974203339,
+        "mrr": 0.8115721633397577,
+        "median_rank": 1.0,
+        "gallery_size": 26319
+      },
+      "doevent_to_parfumo_full_gallery": {
+        "n_queries": 663,
+        "recall@1": 0.7043740573152338,
+        "recall@5": 0.8431372549019608,
+        "recall@10": 0.8672699849170438,
+        "mrr": 0.76677030682702,
+        "median_rank": 1.0,
+        "gallery_size": 26666
+      },
+      "accords": {
+        "n_perfumes": 1908,
+        "map": 0.7797957113450833,
+        "precision@1": 0.8867924528301887,
+        "ndcg@5": 0.7244123334541386
+      },
+      "family": {
+        "n_perfumes": 2619,
+        "accuracy": 0.6380297823596792,
+        "macro_f1": 0.47716319005805025
+      },
+      "subfamily": {
+        "n_perfumes": 2619,
+        "accuracy": 0.4471172203130966,
+        "macro_f1": 0.21347932771498812
+      }
+    },
+    "jaccard": {
+      "parfumo_to_doevent": {
+        "n_queries": 659,
+        "recall@1": 0.8194233687405159,
+        "recall@5": 0.8998482549317147,
+        "recall@10": 0.921092564491654,
+        "mrr": 0.8586858667538234,
+        "median_rank": 1.0,
+        "gallery_size": 2619
+      },
+      "doevent_to_parfumo": {
+        "n_queries": 663,
+        "recall@1": 0.7330316742081447,
+        "recall@5": 0.8597285067873304,
+        "recall@10": 0.8808446455505279,
+        "mrr": 0.7916996234210565,
+        "median_rank": 1.0,
+        "gallery_size": 2732
+      },
+      "parfumo_to_doevent_full_gallery": {
+        "n_queries": 659,
+        "recall@1": 0.7025796661608498,
+        "recall@5": 0.8270106221547799,
+        "recall@10": 0.849772382397572,
+        "mrr": 0.7576527143880729,
+        "median_rank": 1.0,
+        "gallery_size": 26319
+      },
+      "doevent_to_parfumo_full_gallery": {
+        "n_queries": 663,
+        "recall@1": 0.5972850678733032,
+        "recall@5": 0.7616892911010558,
+        "recall@10": 0.803921568627451,
+        "mrr": 0.6663991599011256,
+        "median_rank": 1.0,
+        "gallery_size": 26666
+      }
+    },
+    "tfidf_notes": {
+      "parfumo_to_doevent": {
+        "n_queries": 659,
+        "recall@1": 0.7617602427921093,
+        "recall@5": 0.8573596358118362,
+        "recall@10": 0.8998482549317147,
+        "mrr": 0.807057844115319,
+        "median_rank": 1.0,
+        "gallery_size": 2619
+      },
+      "doevent_to_parfumo": {
+        "n_queries": 663,
+        "recall@1": 0.5460030165912518,
+        "recall@5": 0.7435897435897436,
+        "recall@10": 0.7948717948717948,
+        "mrr": 0.6323921710248462,
+        "median_rank": 1.0,
+        "gallery_size": 2732
+      },
+      "parfumo_to_doevent_full_gallery": {
+        "n_queries": 659,
+        "recall@1": 0.6403641881638846,
+        "recall@5": 0.7556904400606981,
+        "recall@10": 0.8012139605462822,
+        "mrr": 0.6964663152200377,
+        "median_rank": 1.0,
+        "gallery_size": 26319
+      },
+      "doevent_to_parfumo_full_gallery": {
+        "n_queries": 663,
+        "recall@1": 0.39668174962292607,
+        "recall@5": 0.5429864253393665,
+        "recall@10": 0.6123680241327301,
+        "mrr": 0.47108709081676337,
+        "median_rank": 3.0,
+        "gallery_size": 26666
+      }
+    },
+    "tfidf_words": {
+      "parfumo_to_doevent": {
+        "n_queries": 659,
+        "recall@1": 0.7921092564491654,
+        "recall@5": 0.8801213960546282,
+        "recall@10": 0.9089529590288316,
+        "mrr": 0.8334604098773419,
+        "median_rank": 1.0,
+        "gallery_size": 2619
+      },
+      "doevent_to_parfumo": {
+        "n_queries": 663,
+        "recall@1": 0.5852187028657617,
+        "recall@5": 0.7828054298642534,
+        "recall@10": 0.8340874811463047,
+        "mrr": 0.6692430316512803,
+        "median_rank": 1.0,
+        "gallery_size": 2732
+      },
+      "parfumo_to_doevent_full_gallery": {
+        "n_queries": 659,
+        "recall@1": 0.6783004552352049,
+        "recall@5": 0.7921092564491654,
+        "recall@10": 0.8330804248861912,
+        "mrr": 0.7307871905197773,
+        "median_rank": 1.0,
+        "gallery_size": 26319
+      },
+      "doevent_to_parfumo_full_gallery": {
+        "n_queries": 663,
+        "recall@1": 0.4253393665158371,
+        "recall@5": 0.5882352941176471,
+        "recall@10": 0.6410256410256411,
+        "mrr": 0.5024207878007338,
+        "median_rank": 3.0,
+        "gallery_size": 26666
+      }
+    },
+    "lsa": {
+      "parfumo_to_doevent": {
+        "n_queries": 659,
+        "recall@1": 0.8179059180576631,
+        "recall@5": 0.8922610015174507,
+        "recall@10": 0.9089529590288316,
+        "mrr": 0.8530414917279531,
+        "median_rank": 1.0,
+        "gallery_size": 2619
+      },
+      "doevent_to_parfumo": {
+        "n_queries": 663,
+        "recall@1": 0.7812971342383107,
+        "recall@5": 0.8793363499245852,
+        "recall@10": 0.8959276018099548,
+        "mrr": 0.8252515340052623,
+        "median_rank": 1.0,
+        "gallery_size": 2732
+      },
+      "parfumo_to_doevent_full_gallery": {
+        "n_queries": 659,
+        "recall@1": 0.7056145675265554,
+        "recall@5": 0.8224582701062215,
+        "recall@10": 0.849772382397572,
+        "mrr": 0.7612046550180408,
+        "median_rank": 1.0,
+        "gallery_size": 26319
+      },
+      "doevent_to_parfumo_full_gallery": {
+        "n_queries": 663,
+        "recall@1": 0.665158371040724,
+        "recall@5": 0.8099547511312217,
+        "recall@10": 0.8431372549019608,
+        "mrr": 0.7280241324013424,
+        "median_rank": 1.0,
+        "gallery_size": 26666
+      }
+    },
+    "logreg_bag_of_notes": {
+      "accords": {
+        "n_perfumes": 1908,
+        "map": 0.7800811966765133,
+        "precision@1": 0.8825995807127882,
+        "ndcg@5": 0.7243487410299994
+      },
+      "family": {
+        "n_perfumes": 2619,
+        "accuracy": 0.6410843833524246,
+        "macro_f1": 0.4928555202904671
+      },
+      "subfamily": {
+        "n_perfumes": 2619,
+        "accuracy": 0.43909889270714014,
+        "macro_f1": 0.22576065097689227
+      }
+    }
+  }
+}

@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>scentvec</title>
+<style>
+  :root {
+    --ink: #1d1b19; --muted: #6f6a64; --line: #e4dfd8; --paper: #faf8f5; --card: #ffffff;
+    --accent: #7a4b2a; --accent-soft: #f1e6dc; --good: #2f6b4f; --warn: #a2552a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+         color: var(--ink); background: var(--paper); }
+  header { padding: 22px 24px 8px; max-width: 980px; margin: 0 auto; }
+  h1 { margin: 0; font-size: 26px; letter-spacing: -0.02em; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  main { max-width: 980px; margin: 0 auto; padding: 8px 24px 60px; }
+  nav { display: flex; gap: 6px; border-bottom: 1px solid var(--line); margin: 14px 0 18px; flex-wrap: wrap; }
+  nav button { border: 0; background: none; padding: 10px 14px; font: inherit; color: var(--muted);
+               cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  nav button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+  section[hidden] { display: none; }
+  label { display: block; font-size: 13px; color: var(--muted); margin: 0 0 4px; }
+  input[type=text], input[type=number], textarea, select {
+    width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+    font: inherit; background: var(--card); color: var(--ink); }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 64px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 12px; }
+  .row > div { flex: 1 1 180px; }
+  .row > .narrow { flex: 0 0 110px; }
+  .row > .check { flex: 0 0 auto; padding-bottom: 10px; }
+  .check label { display: inline; color: var(--ink); font-size: 14px; }
+  button.primary { background: var(--accent); color: #fff; border: 0; border-radius: 8px;
+                   padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+  button.primary:disabled { opacity: .5; cursor: default; }
+  button.link { background: none; border: 0; color: var(--accent); cursor: pointer; font: inherit; padding: 0; }
+  .picker { position: relative; }
+  .suggestions { position: absolute; z-index: 5; left: 0; right: 0; top: 100%; background: var(--card);
+                 border: 1px solid var(--line); border-radius: 8px; margin-top: 4px; max-height: 320px;
+                 overflow: auto; box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+  .suggestions div { padding: 8px 12px; cursor: pointer; }
+  .suggestions div:hover, .suggestions div.active { background: var(--accent-soft); }
+  .suggestions small { color: var(--muted); }
+  .picked { margin: 6px 0 0; font-size: 13px; color: var(--good); min-height: 18px; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 12px; }
+  .chip { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 3px 10px;
+          font-size: 12.5px; border: 0; }
+  button.chip { cursor: pointer; font-family: inherit; }
+  .chip.plain { background: #efece7; color: var(--muted); }
+  .status { margin: 14px 0; color: var(--muted); }
+  .status.error { color: var(--warn); }
+  .understood { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+                padding: 10px 14px; margin: 14px 0; font-size: 14px; }
+  .understood b { font-weight: 600; }
+  .understood .ignored { color: var(--warn); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+          padding: 14px 16px; margin: 10px 0; }
+  .card h3 { margin: 0; font-size: 16px; }
+  .card h3 small { font-weight: 400; color: var(--muted); }
+  .card .top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .score { font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; font-size: 13px; }
+  .notes { margin: 8px 0 0; font-size: 13.5px; }
+  .notes span.tier { color: var(--muted); display: inline-block; min-width: 46px; }
+  .notes mark { background: #fbeccf; padding: 0 2px; border-radius: 3px; color: inherit; }
+  .card .actions { margin-top: 8px; display: flex; gap: 14px; font-size: 13px; }
+  .card .actions a { color: var(--accent); text-decoration: none; }
+  .bars { display: grid; grid-template-columns: 110px 1fr 44px; gap: 4px 10px; align-items: center;
+          font-size: 13.5px; margin: 8px 0; }
+  .bar { height: 8px; background: #efece7; border-radius: 4px; overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--accent); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 720px) { .grid2 { grid-template-columns: 1fr; } }
+  h4 { margin: 14px 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  footer { max-width: 980px; margin: 0 auto; padding: 0 24px 40px; color: var(--muted); font-size: 12.5px; }
+  code { background: #efece7; padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>scentvec</h1>
+  <p id="tagline">Perfume embedding search</p>
+</header>
+<main>
+  <nav role="tablist">
+    <button role="tab" data-tab="similar" aria-selected="true">Find similar</button>
+    <button role="tab" data-tab="describe" aria-selected="false">Describe a scent</button>
+    <button role="tab" data-tab="blend" aria-selected="false">Blend</button>
+    <button role="tab" data-tab="notes" aria-selected="false">Notes to vector</button>
+  </nav>
+
+  <section id="tab-similar">
+    <div class="row">
+      <div class="picker">
+        <label for="similar-input">Perfume</label>
+        <input type="text" id="similar-input" placeholder="e.g. creed aventus" autocomplete="off">
+        <div class="picked" id="similar-picked"></div>
+      </div>
+      <div class="narrow">
+        <label for="similar-k">Results</label>
+        <input type="number" id="similar-k" value="10" min="1" max="50">
+      </div>
+      <div class="narrow">
+        <label for="similar-ratings">Min. ratings</label>
+        <input type="number" id="similar-ratings" value="0" min="0">
+      </div>
+      <div class="check">
+        <input type="checkbox" id="similar-brand"> <label for="similar-brand">One per brand</label>
+      </div>
+      <div class="check"><button class="primary" id="similar-go" disabled>Search</button></div>
+    </div>
+    <div id="similar-out"></div>
+  </section>
+
+  <section id="tab-describe" hidden>
+    <label for="describe-text">What should it smell like?</label>
+    <textarea id="describe-text" placeholder="smoky vanilla and tobacco, not too sweet, no patchouli"></textarea>
+    <div class="chips" id="describe-examples"></div>
+    <div class="row">
+      <div class="narrow">
+        <label for="describe-k">Results</label>
+        <input type="number" id="describe-k" value="10" min="1" max="50">
+      </div>
+      <div class="narrow">
+        <label for="describe-ratings">Min. ratings</label>
+        <input type="number" id="describe-ratings" value="0" min="0">
+      </div>
+      <div class="check">
+        <input type="checkbox" id="describe-brand"> <label for="describe-brand">One per brand</label>
+      </div>
+      <div class="check"><button class="primary" id="describe-go">Search</button></div>
+    </div>
+    <div id="describe-out"></div>
+  </section>
+
+  <section id="tab-blend" hidden>
+    <p class="status">Pick two or three perfumes; results sit between them in the embedding space.</p>
+    <div id="blend-rows"></div>
+    <div class="row">
+      <div class="narrow">
+        <label for="blend-k">Results</label>
+        <input type="number" id="blend-k" value="10" min="1" max="50">
+      </div>
+      <div class="check"><button class="primary" id="blend-go">Blend</button></div>
+    </div>
+    <div id="blend-out"></div>
+  </section>
+
+  <section id="tab-notes" hidden>
+    <div class="row">
+      <div><label for="notes-top">Top notes</label><input type="text" id="notes-top" placeholder="bergamot, pink pepper"></div>
+      <div><label for="notes-middle">Heart notes</label><input type="text" id="notes-middle" placeholder="rose, iris"></div>
+      <div><label for="notes-base">Base notes</label><input type="text" id="notes-base" placeholder="musk, sandalwood, vanilla"></div>
+    </div>
+    <div class="row">
+      <div><label for="notes-any">Notes without a position</label><input type="text" id="notes-any" placeholder="optional"></div>
+      <div class="check"><button class="primary" id="notes-go">Embed</button></div>
+    </div>
+    <div id="notes-out"></div>
+  </section>
+</main>
+<footer>
+  Similarity is computed from listed notes only. It does not know concentration, quality of
+  materials or how a perfume wears on skin. Accords marked "predicted" come from the model, not from votes.
+</footer>
+
+<script>
+"use strict";
+
+const TIERS = [["notes_top", "Top"], ["notes_middle", "Heart"], ["notes_base", "Base"], ["notes_other", "Notes"]];
+const EXAMPLES = [
+  "smoky vanilla and tobacco, not too sweet, no patchouli",
+  "fresh citrus and green tea, no musk, for men",
+  "like baccarat rouge 540 but less sweet",
+  "powdery iris and violet with sandalwood",
+  "creamy coconut, fig and salt, after 2015",
+];
+
+function el(tag, attributes, children) {
+  const node = document.createElement(tag);
+  for (const [name, value] of Object.entries(attributes || {})) {
+    if (name === "text") { node.textContent = value; }
+    else if (name === "class") { node.className = value; }
+    else { node.setAttribute(name, value); }
+  }
+  for (const child of children || []) {
+    node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+  }
+  return node;
+}
+
+async function api(path, body) {
+  const options = body === undefined ? {} : {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(body),
+  };
+  const response = await fetch(path, options);
+  let payload = null;
+  try { payload = await response.json(); } catch (error) { payload = null; }
+  if (!response.ok) {
+    throw new Error(payload && payload.error ? payload.error : "request failed (" + response.status + ")");
+  }
+  return payload;
+}
+
+function splitNotes(value) {
+  return value.split(",").map((part) => part.trim()).filter((part) => part.length > 0);
+}
+
+function titleOf(entry) {
+  const details = [entry.year, entry.concentration, entry.gender].filter((value) => value);
+  return {main: entry.brand + " \u2013 " + entry.name, detail: details.join(", ")};
+}
+
+function showStatus(target, message, isError) {
+  target.replaceChildren(el("p", {class: "status" + (isError ? " error" : ""), text: message}));
+}
+
+function resultCard(entry, highlighted) {
+  const title = titleOf(entry);
+  const heading = el("h3", {}, [title.main + " "]);
+  if (title.detail) { heading.appendChild(el("small", {text: title.detail})); }
+  const scoreText = entry.score === undefined ? "" : "score " + entry.score.toFixed(3);
+  const card = el("div", {class: "card"}, [
+    el("div", {class: "top"}, [heading, el("span", {class: "score", text: scoreText})]),
+  ]);
+
+  const chips = el("div", {class: "chips"});
+  for (const accord of entry.accords.values) {
+    chips.appendChild(el("span", {class: "chip", text: accord}));
+  }
+  if (entry.accords.source === "predicted" && entry.accords.values.length) {
+    chips.appendChild(el("span", {class: "chip plain", text: "predicted"}));
+  }
+  if (entry.family) {
+    chips.appendChild(el("span", {class: "chip plain", text: entry.family + (entry.family_source === "predicted" ? " (predicted)" : "")}));
+  }
+  card.appendChild(chips);
+
+  const marked = new Set(highlighted || []);
+  for (const [field, label] of TIERS) {
+    const notes = entry[field] || [];
+    if (!notes.length) { continue; }
+    const line = el("div", {class: "notes"}, [el("span", {class: "tier", text: label})]);
+    notes.forEach((note, index) => {
+      if (index > 0) { line.appendChild(document.createTextNode(", ")); }
+      line.appendChild(marked.has(note) ? el("mark", {text: note}) : document.createTextNode(note));
+    });
+    card.appendChild(line);
+  }
+
+  const actions = el("div", {class: "actions"});
+  const again = el("button", {class: "link", text: "Find similar"});
+  again.addEventListener("click", () => {
+    selectTab("similar");
+    similarPicker.choose(entry);
+    runSimilar();
+  });
+  actions.appendChild(again);
+  if (entry.url && entry.url.startsWith("https://")) {
+    actions.appendChild(el("a", {href: entry.url, target: "_blank", rel: "noopener noreferrer", text: "Parfumo page"}));
+  }
+  if (entry.rating) {
+    actions.appendChild(el("span", {class: "score", text: "rated " + entry.rating.toFixed(1) + " by " + entry.rating_count}));
+  }
+  card.appendChild(actions);
+  return card;
+}
+
+function renderResults(target, results, highlightField) {
+  if (!results.length) {
+    target.appendChild(el("p", {class: "status", text: "No perfumes match. Loosen the filters or exclusions."}));
+    return;
+  }
+  for (const entry of results) {
+    target.appendChild(resultCard(entry, entry[highlightField]));
+  }
+}
+
+/* Perfume picker with autocomplete. */
+function makePicker(input, pickedLabel, onChange) {
+  const box = el("div", {class: "suggestions", hidden: ""});
+  input.parentNode.insertBefore(box, pickedLabel);
+  const state = {selected: null, timer: null, sequence: 0};
+
+  function close() { box.hidden = true; box.replaceChildren(); }
+
+  function choose(entry) {
+    state.selected = entry;
+    const title = titleOf(entry);
+    input.value = title.main;
+    pickedLabel.textContent = "Selected: " + title.main + (title.detail ? " (" + title.detail + ")" : "");
+    close();
+    if (onChange) { onChange(); }
+  }
+
+  async function suggest() {
+    const text = input.value.trim();
+    const ticket = ++state.sequence;
+    if (text.length < 2) { close(); return; }
+    try {
+      const found = await api("/api/lookup?limit=8&q=" + encodeURIComponent(text));
+      if (ticket !== state.sequence) { return; }
+      box.replaceChildren();
+      for (const entry of found.results) {
+        const title = titleOf(entry);
+        const row = el("div", {}, [title.main + " "]);
+        row.appendChild(el("small", {text: title.detail}));
+        row.addEventListener("mousedown", (event) => { event.preventDefault(); choose(entry); });
+        box.appendChild(row);
+      }
+      box.hidden = found.results.length === 0;
+    } catch (error) { close(); }
+  }
+
+  input.addEventListener("input", () => {
+    state.selected = null;
+    pickedLabel.textContent = "";
+    if (onChange) { onChange(); }
+    clearTimeout(state.timer);
+    state.timer = setTimeout(suggest, 160);
+  });
+  input.addEventListener("blur", () => setTimeout(close, 120));
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !box.hidden && box.firstChild) {
+      event.preventDefault();
+      box.firstChild.dispatchEvent(new MouseEvent("mousedown"));
+    }
+  });
+  return {choose: choose, selected: () => state.selected};
+}
+
+/* Tabs. */
+function selectTab(name) {
+  for (const button of document.querySelectorAll("nav button")) {
+    const active = button.dataset.tab === name;
+    button.setAttribute("aria-selected", active ? "true" : "false");
+    document.getElementById("tab-" + button.dataset.tab).hidden = !active;
+  }
+}
+for (const button of document.querySelectorAll("nav button")) {
+  button.addEventListener("click", () => selectTab(button.dataset.tab));
+}
+
+/* Find similar. */
+const similarOut = document.getElementById("similar-out");
+const similarGo = document.getElementById("similar-go");
+const similarPicker = makePicker(
+  document.getElementById("similar-input"),
+  document.getElementById("similar-picked"),
+  () => { similarGo.disabled = similarPicker.selected() === null; }
+);
+
+async function runSimilar() {
+  const selected = similarPicker.selected();
+  if (!selected) { return; }
+  showStatus(similarOut, "Searching\u2026");
+  try {
+    const response = await api("/api/similar", {
+      id: selected.item_id,
+      k: Number(document.getElementById("similar-k").value) || 10,
+      max_per_brand: document.getElementById("similar-brand").checked ? 1 : 0,
+      filters: {min_rating_count: Number(document.getElementById("similar-ratings").value) || 0},
+    });
+    similarOut.replaceChildren(el("h4", {text: "Reference"}), resultCard(response.query, []), el("h4", {text: "Closest perfumes"}));
+    renderResults(similarOut, response.results, "shared_notes");
+  } catch (error) { showStatus(similarOut, error.message, true); }
+}
+similarGo.addEventListener("click", runSimilar);
+
+/* Describe a scent. */
+const describeOut = document.getElementById("describe-out");
+const describeText = document.getElementById("describe-text");
+for (const example of EXAMPLES) {
+  const chip = el("button", {class: "chip", text: example});
+  chip.addEventListener("click", () => { describeText.value = example; runDescribe(); });
+  document.getElementById("describe-examples").appendChild(chip);
+}
+
+function understoodBox(query) {
+  const box = el("div", {class: "understood"});
+  function line(label, values) {
+    if (!values.length) { return; }
+    box.appendChild(el("div", {}, [el("b", {text: label + ": "}), values.join(", ")]));
+  }
+  line("Like", query.like.map((entry) => titleOf(entry).main));
+  line("Notes", query.notes.map((entry) => entry.note));
+  line("Accords", query.accords);
+  line("Without notes", query.avoid_notes);
+  line("Less", query.avoid_accords);
+  line("Filters", Object.entries(query.filters).map(([name, value]) => name + " = " + (Array.isArray(value) ? value.join("/") : value)));
+  if (query.unrecognised.length) {
+    box.appendChild(el("div", {class: "ignored"}, [el("b", {text: "Not understood: "}), query.unrecognised.join(", ")]));
+  }
+  return box;
+}
+
+async function runDescribe() {
+  const text = describeText.value.trim();
+  if (!text) { showStatus(describeOut, "Type a description first.", true); return; }
+  showStatus(describeOut, "Searching\u2026");
+  try {
+    const response = await api("/api/search", {
+      text: text,
+      k: Number(document.getElementById("describe-k").value) || 10,
+      max_per_brand: document.getElementById("describe-brand").checked ? 1 : 0,
+      filters: {min_rating_count: Number(document.getElementById("describe-ratings").value) || 0},
+    });
+    describeOut.replaceChildren(understoodBox(response.query));
+    renderResults(describeOut, response.results, "matched_notes");
+  } catch (error) { showStatus(describeOut, error.message, true); }
+}
+document.getElementById("describe-go").addEventListener("click", runDescribe);
+describeText.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); runDescribe(); }
+});
+
+/* Blend. */
+const blendOut = document.getElementById("blend-out");
+const blendPickers = [];
+for (let index = 0; index < 3; index++) {
+  const input = el("input", {type: "text", id: "blend-input-" + index, autocomplete: "off",
+                             placeholder: index < 2 ? "perfume " + (index + 1) : "optional third perfume"});
+  const picked = el("div", {class: "picked"});
+  const weight = el("input", {type: "number", id: "blend-weight-" + index, value: "1", min: "0", step: "0.5"});
+  const row = el("div", {class: "row"}, [
+    el("div", {class: "picker"}, [el("label", {for: "blend-input-" + index, text: "Perfume " + (index + 1)}), input, picked]),
+    el("div", {class: "narrow"}, [el("label", {for: "blend-weight-" + index, text: "Weight"}), weight]),
+  ]);
+  document.getElementById("blend-rows").appendChild(row);
+  blendPickers.push({picker: makePicker(input, picked, null), weight: weight});
+}
+
+async function runBlend() {
+  const chosen = blendPickers.filter((entry) => entry.picker.selected() !== null);
+  if (chosen.length < 2) { showStatus(blendOut, "Pick at least two perfumes from the suggestions.", true); return; }
+  showStatus(blendOut, "Searching\u2026");
+  try {
+    const response = await api("/api/search", {
+      like: chosen.map((entry) => entry.picker.selected().item_id),
+      like_weights: chosen.map((entry) => Number(entry.weight.value)),
+      k: Number(document.getElementById("blend-k").value) || 10,
+    });
+    blendOut.replaceChildren(understoodBox(response.query));
+    renderResults(blendOut, response.results, "matched_notes");
+  } catch (error) { showStatus(blendOut, error.message, true); }
+}
+document.getElementById("blend-go").addEventListener("click", runBlend);
+
+/* Notes to vector. */
+const notesOut = document.getElementById("notes-out");
+
+function barList(entries, labelKey) {
+  const grid = el("div", {class: "bars"});
+  for (const entry of entries) {
+    const fill = el("i");
+    fill.style.width = Math.round(entry.probability * 100) + "%";
+    grid.appendChild(el("span", {text: entry[labelKey]}));
+    grid.appendChild(el("div", {class: "bar"}, [fill]));
+    grid.appendChild(el("span", {class: "score", text: entry.probability.toFixed(2)}));
+  }
+  return grid;
+}
+
+async function runNotes() {
+  const body = {
+    top: splitNotes(document.getElementById("notes-top").value),
+    middle: splitNotes(document.getElementById("notes-middle").value),
+    base: splitNotes(document.getElementById("notes-base").value),
+    notes: splitNotes(document.getElementById("notes-any").value),
+    k: 8,
+  };
+  showStatus(notesOut, "Embedding\u2026");
+  try {
+    const response = await api("/api/embed", body);
+    const left = el("div", {}, [el("h4", {text: "Predicted accords"}), barList(response.accords, "accord")]);
+    const right = el("div", {}, [
+      el("h4", {text: "Family"}), barList(response.family, "family"),
+      el("h4", {text: "Subfamily"}), barList(response.subfamily, "subfamily"),
+    ]);
+    const recognised = el("div", {class: "chips"});
+    for (const note of response.notes) {
+      const known = note.recognised_as === "note";
+      const suffix = known ? "" : " \u00b7 via " + note.recognised_as;
+      recognised.appendChild(el("span", {class: "chip" + (known ? "" : " plain"), text: note.note + suffix}));
+    }
+    const copy = el("button", {class: "link", text: "Copy " + response.dim + "-d vector as JSON"});
+    copy.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(response.vector));
+        copy.textContent = "Copied";
+      } catch (error) { copy.textContent = "Copy failed"; }
+    });
+    notesOut.replaceChildren(
+      el("h4", {text: "How the model read your notes"}), recognised,
+      el("div", {class: "grid2"}, [left, right]), copy,
+      el("h4", {text: "Closest perfumes"})
+    );
+    renderResults(notesOut, response.nearest || [], "matched_notes");
+  } catch (error) { showStatus(notesOut, error.message, true); }
+}
+document.getElementById("notes-go").addEventListener("click", runNotes);
+
+api("/api/health").then((health) => {
+  document.getElementById("tagline").textContent =
+    health.perfumes.toLocaleString() + " perfumes from " + health.brands.toLocaleString() +
+    " brands \u00b7 " + health.embedding_dim + "-dimensional embeddings \u00b7 v" + health.version;
+}).catch(() => {});
+</script>
+</body>
+</html>
