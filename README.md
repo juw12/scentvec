@@ -28,7 +28,7 @@ The perfume data is third-party and is not redistributed here, so the first
 set-up downloads it and builds the catalog locally:
 
 ```sh
-git clone <this repository> scentvec
+git clone https://github.com/juw12/scentvec.git
 cd scentvec
 python3 -m venv .venv
 ./.venv/bin/pip install --upgrade pip           # editable installs need pip 21.3+
