@@ -167,6 +167,9 @@ different notes, it does not.
 
 ## Licensing and use
 
+The code is MIT-licensed (see `LICENSE`). That does not extend to the data or
+settle the status of the trained weights.
+
 The catalog is built from scraped, community-edited data with unclear reuse
 terms, and two chemistry sources are for research use. Treat the packaged
 catalog and model as suitable for personal and research use. Commercial use or

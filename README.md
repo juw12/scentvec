@@ -7,6 +7,10 @@ scentvec turns a perfume's note pyramid (top, heart and base notes) into one
 compositions. On top of the model there is a catalog of 44,658 perfumes with a
 command line, a local web app, a JSON API and a Python API.
 
+**Try the model in your browser: <https://juw12.github.io/scentvec/>.** The page
+runs the trained network itself, with no server: type two note pyramids and it
+shows their predicted accords, olfactive family and similarity.
+
 What it is good for:
 
 - "What is similar to X?" over 44,658 perfumes from 1,888 brands.
@@ -142,27 +146,41 @@ Training takes about 10 minutes on a 4-core laptop CPU. Ablations:
 PYTHONPATH=src ./.venv/bin/python -m unittest discover -s tests -t .
 ```
 
-84 tests cover text normalisation, data cleaning, query parsing, the encoder,
-the engine and the HTTP server.
+91 tests cover text normalisation, data cleaning, query parsing, the encoder,
+the engine, the HTTP server and the browser export.
 
 ## Layout
 
 ```
 src/scentvec/      library, CLI, server, web app (web/index.html)
-scripts/           raw-data fetch, data rebuild, ablations, bootstrap significance
-tests/             unit tests
-examples/          quickstart.py
-data/raw/          source tables, fetched by scripts/fetch_raw_data.py (not in git)
-data/processed/    cleaned records, cross-database pairs, chemistry table (not in git)
-artifacts/model/   packaged model bundle (2.3 MB)
-artifacts/index/   catalog and its embeddings (32 MB, built locally, not in git)
-reports/           evaluation, significance, ablations, before/after snapshots
+scripts/           raw-data fetch, data rebuild, ablations, bootstrap significance,
+                   export_web_model.py (writes docs/model.bin and docs/model.json)
+docs/              landing page served by GitHub Pages: index.html, scentvec.js
+                   (the model in plain J## Landing page and browser model
+
+`docs/` is a static site. `docs/scentvec.js` is a dependency-free JavaScript
+port of the encoder; it reads `docs/model.bin` (float16 weights) and
+`docs/model.json`. The port agrees with the PyTorch model to a cosine of
+0.9999998 or better on 300 random pyramids. It only knows the 1,053 notes that
+have their own entry in the model; the Python package also handles unseen notes.
+
+After retraining, regenerate the export and re-run the tests:
+
+```sh
+./.venv/bin/python scripts/export_web_model.py
 ```
 
-## Licence note
+To preview the page locally, serve the repository root
+(`python3 -m http.server`) and open `/docs/`.
 
-No licence has been chosen for the code. The training data is scraped,
+## Licence
+
+The code is released under the [MIT licence](LICENSE).
+
+That licence covers the code only. The training data is scraped,
 community-edited perfume data with unclear or research-only terms, which is
 why this repository does not contain it and fetches it from its original
-hosts instead. The packaged model weights were trained on that data. Check
-MODEL_CARD.md before redistributing the catalog or using it commercially.
+hosts instead. The packaged model weights (`artifacts/model/`, `docs/model.bin`)
+were trained on that data. Read the licensing section of
+[MODEL_CARD.md](MODEL_CARD.md#licensing-and-use) before redistributing the
+catalog or using the model commercially.
