@@ -11,6 +11,9 @@ command line, a local web app, a JSON API and a Python API.
 runs the trained network itself, with no server: type two note pyramids and it
 shows their predicted accords, olfactive family and similarity.
 
+On an iPhone the page can be kept on the home screen: open it in Safari, tap Share, then
+*Add to Home Screen*. It opens full screen with its own icon and needs a connection to load the model.
+
 What it is good for:
 
 - "What is similar to X?" over 44,658 perfumes from 1,888 brands.
