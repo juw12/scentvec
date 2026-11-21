@@ -298,6 +298,8 @@
   .codebox pre .comment { color: #a8959f; }
   .codebox .text-button { position: absolute; top: 12px; right: 12px; background: #2a2027; color: #f1e7ea; border-color: #43343e; max-width: none; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  /* A code line longer than the screen scrolls inside its box; it must not widen the column and the page. */
+  .two > * { min-width: 0; }
 
   footer { padding: 34px 0 54px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; }
   footer .wrap { display: grid; gap: 8px; }
