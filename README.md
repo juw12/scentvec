@@ -27,6 +27,15 @@ the **published note list**. Two perfumes that smell alike but publish different
 notes will be far apart. See [MODEL_CARD.md](MODEL_CARD.md) for measured
 performance and limits.
 
+## Get it on your device
+
+- **Windows:** [`scentvec-Windows-Setup.exe`](https://github.com/juw12/scentvec/releases/download/desktop/scentvec-Windows-Setup.exe) (no admin needed; if Windows says it protected your PC, choose *More info → Run anyway*), or without installing [`scentvec-Windows-Portable.zip`](https://github.com/juw12/scentvec/releases/download/desktop/scentvec-Windows-Portable.zip).
+- **Mac:** [`scentvec-macOS-AppleSilicon.dmg`](https://github.com/juw12/scentvec/releases/download/desktop/scentvec-macOS-AppleSilicon.dmg) (M1 and newer) or [`scentvec-macOS-Intel.dmg`](https://github.com/juw12/scentvec/releases/download/desktop/scentvec-macOS-Intel.dmg). The first time, macOS blocks it because it is not notarized: **System Settings → Privacy & Security → Open Anyway**.
+- **Android:** [`scentvec-android.apk`](https://github.com/juw12/scentvec/releases/download/android/scentvec-android.apk): open the file on the phone and allow your browser to install apps once.
+- **iPhone:** open https://juw12.github.io/scentvec/ in Safari, tap Share, then **Add to Home Screen**.
+
+The Windows, Mac and Android apps are the web app in its own window ([`desktop/`](desktop/README.md), [`android/`](android/README.md)) and change with it. Each build is opened on GitHub's machines before it is published: on Windows and on a Mac the page loads, the app starts and can store data; on an Android emulator it installs, opens and stays up. They are not code-signed or notarised, and no real phone or PC has run them yet.
+
 ## Quick start
 
 Requires Python 3.9 or newer, git, and about 1.5 GB of disk (mostly PyTorch).
